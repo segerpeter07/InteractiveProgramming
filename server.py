@@ -37,4 +37,5 @@ if __name__ == "__main__":
     server = osc_server.ThreadingOSCUDPServer(
         (args.ip, args.port), dispatcher)
     print("Serving on {}".format(server.server_address))
+    # osc_server.send_message('welcome!')
     server.serve_forever()
