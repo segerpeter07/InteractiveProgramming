@@ -5,10 +5,8 @@ This program sends 10 random values between 0.0 and 1.0 to the /filter address,
 waiting for 1 seconds between each value.
 """
 import argparse
-import random
 import time
 
-from pythonosc import osc_message_builder
 from pythonosc import udp_client
 
 
@@ -22,6 +20,6 @@ if __name__ == "__main__":
 
     client = udp_client.SimpleUDPClient(args.ip, args.port)
 
-    for x in range(10):
-        client.send_message("/filter", 'Pranay is a dickhole')
-        time.sleep(1)
+    for x in range(100):
+        client.send_message("/filter", 'hi')
+        time.sleep(.01)
