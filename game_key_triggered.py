@@ -32,11 +32,11 @@ def check_keys():
 
 control_variable = 10
 while(1):
-    # c.check_messages()
+    c.check_messages()
     temp = check_keys()
-    print(temp)
+    # print(temp)
     if len(temp) != 0:
-        print(temp)
+        # print(temp)
         c.send_message(str(temp))
     c.send_message('hb')
     time.sleep(.01)

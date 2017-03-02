@@ -1,6 +1,7 @@
 import time
 import ast
 max_ACC = 1
+acc_standard = .9
 
 
 class model(object):
@@ -13,7 +14,7 @@ class model(object):
         self.correlation = {}
 
     def save_val(self, thruput, member):
-        print(thruput)
+        # print(thruput)
         to_use = self.correlation[member]
         try:
             ls = ast.literal_eval(thruput)
@@ -43,6 +44,11 @@ class model(object):
         # print('updated')
         # print(self.users)
         # print(self.correlation)
+        to_return = []
+        for user in self.users:
+            to_return.append(user.get_status_vector())
+        print(to_return)
+        return to_return
 
 
 class Point:
@@ -87,14 +93,29 @@ class base_class(object):
         self.vel = self.vel.add(delta_vel)
         delta_pos = self.vel.multiply_by(diff)
         self.loc = self.loc.add(delta_pos)
-        # self.acc = Point(0, 0)  # resets acceleration point afterwards
+
+        if self.acc.x is not 0:
+            cx = -1 * (abs(self.acc.x)/self.acc.x)
+        else:
+            cx = -1
+        if self.acc.y is not 0:
+            cy = -1 * (abs(self.acc.y)/self.acc.y)
+        else:
+            cy = -1
+
+        self.acc = self.acc.add(Point(cx * diff * acc_standard,
+                                      cy * diff * acc_standard))
+        if abs(self.acc.x) < .005:
+            self.acc.x = 0
+        if abs(self.acc.y) < .005:
+            self.acc.y = 0
 
         # calculates change in ROTATION by eulers method
         delta_theta = self.rot.y * diff
         self.rot.x += delta_theta
         # self.rot.y = self.rot.y / 2  # trailing rotational motion
         # print(self.loc, self.vel, self.acc, self.rot)
-        print(self.acc)
+        # print(self.loc)
 
 
 class gunner(base_class):
@@ -118,6 +139,9 @@ class gunner(base_class):
             elif val == 4:
                 print('bang bang')
 
+    def get_status_vector(self):
+        return ['g', self.rot.x]
+
 
 class ship(base_class):
     def __str__(self):
@@ -132,8 +156,11 @@ class ship(base_class):
             elif val == 1:
                 self.acc.x = max_ACC
             elif val == 2:
-                self.acc.x = -max_ACC
+                self.acc.y = -max_ACC
             elif val == 3:
-                self.acc.x = -max_ACC
+                self.acc.y = max_ACC
             elif val == 4:
                 print('bang bang')
+
+    def get_status_vector(self):
+        return ['s', self.loc.x, self.loc.y]

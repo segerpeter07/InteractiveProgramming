@@ -57,11 +57,10 @@ while True:
                     ADDR = SOCK.getpeername()  # get remote address of the socket
                     message = "\r[{}:{}]: {}".format(ADDR[0], ADDR[1], DATA.decode())
 
-                    print(message)
+                    # print(message)
                     test.update_socket_list(ADDR[1])
                     test.save_val(DATA.decode(), ADDR[1])
 
-                    broadcast_data(message.encode())
             except Exception as msg:  # Errors happened, client disconnected
                 print(type(msg).__name__, msg)
                 print("\rClient ({0}, {1}) disconnected.".format(ADDR[0], ADDR[1]))
@@ -72,6 +71,18 @@ while True:
                     CONNECTION_LIST.remove(SOCK)
                 except ValueError as msg:
                     print("{}:{}.".format(type(msg).__name__, msg))
-    test.update_physics()
+    try:  # Data recieved from client, process it
+        new_message = str(test.update_physics())
+        broadcast_data(new_message.encode())
+    except Exception as msg:  # Errors happened, client disconnected
+        print(type(msg).__name__, msg)
+        print("\rClient ({0}, {1}) disconnected.".format(ADDR[0], ADDR[1]))
+        broadcast_data("\rClient ({0}, {1}) is offline\n"
+                       .format(ADDR[0], ADDR[1]).encode())
+        SOCK.close()
+        try:
+            CONNECTION_LIST.remove(SOCK)
+        except ValueError as msg:
+            print("{}:{}.".format(type(msg).__name__, msg))
 
 SERVER_SOCKET.close()
