@@ -19,11 +19,11 @@ class board():
     """
 
     def __init__(self):
-        self.board_vals = {1: 'X', 2: 'D', 3: 'D', 4: 'X', 5: 'D', 6: 'X', 7: 'X', 8: 'D', 9: 'X'}
+        self.board_vals = {1: ' ', 2: ' ', 3: ' ', 4: ' ', 5: ' ', 6: ' ', 7: ' ', 8: ' ', 9: ' '}
 
-    def create_board(self):
+    def print_board(self):
         print('   |   |')
-        print(' ' + self.board_vals[7] + ' | ' + self.board_vals[8] + ' | ' + self.board_vals[9])
+        print(' ' + self.board_vals[1] + ' | ' + self.board_vals[2] + ' | ' + self.board_vals[3])
         print('   |   |')
         print('-----------')
         print('   |   |')
@@ -31,10 +31,14 @@ class board():
         print('   |   |')
         print('-----------')
         print('   |   |')
-        print(' ' + self.board_vals[1] + ' | ' + self.board_vals[2] + ' | ' + self.board_vals[3])
+        print(' ' + self.board_vals[7] + ' | ' + self.board_vals[8] + ' | ' + self.board_vals[9])
         print('   |   |')
+
+    def insert_play(self, play, play_piece):
+        self.board_vals[play] = play_piece
 
 
 if __name__ == '__main__':
     test = board()
-    test.create_board()
+    test.insert_play(5, 'X')
+    test.print_board()
