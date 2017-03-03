@@ -6,6 +6,8 @@ with another player
 
 @Author: Peter Seger
 """
+import pygame
+import time
 
 
 class board():
@@ -38,7 +40,97 @@ class board():
         self.board_vals[play] = play_piece
 
 
+class Board():
+    def __init__(self, height=300, width=300):
+        self.height = height
+        self.width = width
+
+
+class TicTacToeModel:
+    """ Encodes the game state """
+    def __init__(self):
+        self.piece = []
+        x_pos = [100, 400, 700]
+        y_pos = [100, 400, 700]
+        for x in x_pos:
+            for y in y_pos:
+                piece = Piece((0, 15, 0), 20, 20, x, y)
+                self.piece.append(piece)
+
+
+class Piece:
+    def __init__(self, color, height, width, x, y):
+        self.color = color
+        self.height = height
+        self.width = width
+        self.x = x
+        self.y = y
+
+
+def collision(x, y):
+    col1 = range(100, 120)
+    col2 = range(400, 420)
+    col3 = range(700, 720)
+
+    row1 = range(100, 120)
+    row2 = range(400, 420)
+    row3 = range(700, 720)
+
+    if x in col1 or x in col2 or x in col3:
+        if y in row1 or y in row2 or y in row3:
+            return True
+    else:
+        return False
+
+
+class PyGameWindowView:
+    def __init__(self, model, screen):
+        self.model = model
+        self.screen = screen
+
+    def draw(self):
+        self.screen.fill(pygame.Color(0, 0, 0))
+        for pieces in self.model.piece:
+            pygame.draw.rect(self.screen, pygame.Color(0, 22, 134), pygame.Rect(pieces.x, pieces.y, pieces.width, pieces.height))
+        pygame.display.update()
+
+
+# class PyGameMouseController:
+#     def __init__(self, model):
+#         self.model = model
+#
+#     def handle_mouse_event(self, event):
+#         if event.type == pygame.MOUSEMOTION:
+#             self.model.piece.x = event.pos[0] - self.model.piece.width/2.0
+
+
 if __name__ == '__main__':
-    test = board()
-    test.insert_play(5, 'X')
-    test.print_board()
+    # test = board()
+    # test.insert_play(3, "X")
+    # test.print_board()
+
+    pygame.init()
+
+    size = (840, 840)
+    screen = pygame.display.set_mode(size)
+
+    model = TicTacToeModel()
+    view = PyGameWindowView(model, screen)
+    # controller = PyGameMouseController(model)
+
+    running = True
+
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                x, y = event.pos
+                if collision(x, y):
+                    print("collision!")
+                else:
+                    print('No collision')
+        view.draw()
+        time.sleep(.001)
+
+    pygame.quit()
