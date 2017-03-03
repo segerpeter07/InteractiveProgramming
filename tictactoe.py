@@ -54,7 +54,8 @@ class TicTacToeModel:
         y_pos = [100, 400, 700]
         for x in x_pos:
             for y in y_pos:
-                piece = Piece((0, 15, 0), 20, 20, x, y)
+                piece = Piece('Purple', 20, 20, x, y)
+                piece.set_color()
                 self.piece.append(piece)
 
 
@@ -65,6 +66,12 @@ class Piece:
         self.width = width
         self.x = x
         self.y = y
+
+    def set_color(self, color='Green'):
+        self.color = color
+
+    def get_color(self):
+        return 'hello' + self.color
 
     def collision(self, x, y):
         x_range = range(self.x, self.x + 20)
@@ -120,10 +127,11 @@ if __name__ == '__main__':
                 x, y = event.pos
                 for pieces in model.piece:
                     if pieces.collision(x, y):
-                        print("collision at: " + str(pieces.x) + ' ' + str(pieces.y))
-                        pieces.color = (12, 45, 78)
-                        print(pieces.color)
-                    view.draw()
+                        # print("collision at: " + str(pieces.x) + ' ' + str(pieces.y))
+                        if pieces.color == 'Green':
+                            pieces.set_color('Blue')
+                        elif pieces.color == 'Blue':
+                            pieces.set_color('Green')
         view.draw()
         time.sleep(.001)
 
