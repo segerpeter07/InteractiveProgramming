@@ -46,6 +46,21 @@ class Board():
         self.width = width
 
 
+class Player():
+    def __init__(self, name, color):
+        self.name = name
+        self.color = color
+
+    def set_color(self, color):
+        self.color = color
+
+    def set_name(self, name='Player'):
+        self.name = name
+
+    def print_info(self):
+        return 'Player name: ' + self.name + ' Player color: ' + self.color
+
+
 class TicTacToeModel:
     """ Encodes the game state """
     def __init__(self):
@@ -119,7 +134,13 @@ if __name__ == '__main__':
 
     running = True
 
+    """Prompt user to select color"""
+    name = input("What you want your name to be? ")
+    color = input("What do you want your color to be? ")
+    player1 = Player(name, color)
+
     while running:
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -129,8 +150,8 @@ if __name__ == '__main__':
                     if pieces.collision(x, y):
                         # print("collision at: " + str(pieces.x) + ' ' + str(pieces.y))
                         if pieces.color == 'Green':
-                            pieces.set_color('Blue')
-                        elif pieces.color == 'Blue':
+                            pieces.set_color(player1.color)
+                        elif pieces.color == player1.color:
                             pieces.set_color('Green')
         view.draw()
         time.sleep(.001)
