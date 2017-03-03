@@ -66,21 +66,13 @@ class Piece:
         self.x = x
         self.y = y
 
-
-def collision(x, y):
-    col1 = range(100, 120)
-    col2 = range(400, 420)
-    col3 = range(700, 720)
-
-    row1 = range(100, 120)
-    row2 = range(400, 420)
-    row3 = range(700, 720)
-
-    if x in col1 or x in col2 or x in col3:
-        if y in row1 or y in row2 or y in row3:
+    def collision(self, x, y):
+        x_range = range(self.x, self.x + 20)
+        y_range = range(self.y, self.y + 20)
+        if x in x_range and y in y_range:
             return True
-    else:
-        return False
+        else:
+            return False
 
 
 class PyGameWindowView:
@@ -91,7 +83,7 @@ class PyGameWindowView:
     def draw(self):
         self.screen.fill(pygame.Color(0, 0, 0))
         for pieces in self.model.piece:
-            pygame.draw.rect(self.screen, pygame.Color(0, 22, 134), pygame.Rect(pieces.x, pieces.y, pieces.width, pieces.height))
+            pygame.draw.rect(self.screen, pygame.Color(pieces.color), pygame.Rect(pieces.x, pieces.y, pieces.width, pieces.height))
         pygame.display.update()
 
 
@@ -126,10 +118,12 @@ if __name__ == '__main__':
                 running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = event.pos
-                if collision(x, y):
-                    print("collision!")
-                else:
-                    print('No collision')
+                for pieces in model.piece:
+                    if pieces.collision(x, y):
+                        print("collision at: " + str(pieces.x) + ' ' + str(pieces.y))
+                        pieces.color = (12, 45, 78)
+                        print(pieces.color)
+                    view.draw()
         view.draw()
         time.sleep(.001)
 
