@@ -7,7 +7,7 @@ import sys
 
 
 class client(object):
-    def __init__(self, HOST='10.7.64.90', PORT=1337):
+    def __init__(self, HOST='10.7.8.33', PORT=1337):
         self.HOST = HOST
         self.PORT = PORT
 
@@ -26,6 +26,7 @@ class client(object):
             sys.exit()
 
     def send_message(self, message):
+        print(message)
         self.MASTER_SOCK.sendall(message.encode())
 
     def check_messages(self):
@@ -36,8 +37,9 @@ class client(object):
                     print('\nDisconnected from chat server')
                     sys.exit()
                 else:  # print data
-                    print()  # erase last line
-                    print(data.decode(), end="")
+                    # print()  # erase last line
+                    # print(data.decode(), end="")
+                    return data.decode()
 
     def messages(self, msg):
         for sock in self.READ_SOCKETS:  # incoming message from remote server

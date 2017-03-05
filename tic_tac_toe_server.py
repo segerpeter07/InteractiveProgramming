@@ -2,6 +2,9 @@
 """ A simple chat TCP server """
 import socket
 import select
+import model_tic_tac
+
+test = model_tic_tac.model()
 
 
 def broadcast_data(message):
@@ -26,10 +29,10 @@ PORT = 1337
 
 SERVER_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 SERVER_SOCKET.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-SERVER_SOCKET.bind(("10.7.64.19", PORT))  # empty addr string means INADDR_ANY
+SERVER_SOCKET.bind(("10.7.8.33", PORT))  # empty addr string means INADDR_ANY
 
 print("Listening...")
-SERVER_SOCKET.listen(10)  # 10 connections
+SERVER_SOCKET.listen(2)  # 10 connections
 
 CONNECTION_LIST.append(SERVER_SOCKET)
 print("Server started!")
@@ -48,14 +51,21 @@ while True:
             broadcast_data("Client ({0}:{1}) entered room\n"
                            .format(ADDR[0], ADDR[1]).encode())
         else:  # Some incoming message from a client
-            try:  # Data recieved from client, process it
-                DATA = SOCK.recv(RECV_BUFFER)
-                if DATA:
-                    ADDR = SOCK.getpeername()  # get remote address of the socket
-                    message = "\r[{}:{}]: {}".format(ADDR[0], ADDR[1], DATA.decode())
-                    print(message, end="")
-                    broadcast_data(message.encode())
-            except Exception as msg:  # Errors happened, client disconnected
+            # try:  # Data recieved from client, process it
+            DATA = SOCK.recv(RECV_BUFFER)
+            if DATA:
+                ADDR = SOCK.getpeername()  # get remote address of the socket
+                message = "\r[{}:{}]: {}".format(ADDR[0], ADDR[1], DATA.decode())
+
+                # print(message)
+                test.update_socket_list(ADDR[1])
+                test.save_val(DATA.decode(), ADDR[1])
+                if(DATA.decode() == 'hb'):
+                    pass
+                else:
+                    print(ADDR[1], DATA.decode())
+
+            """except Exception as msg:  # Errors happened, client disconnected
                 print(type(msg).__name__, msg)
                 print("\rClient ({0}, {1}) disconnected.".format(ADDR[0], ADDR[1]))
                 broadcast_data("\rClient ({0}, {1}) is offline\n"
@@ -64,7 +74,20 @@ while True:
                 try:
                     CONNECTION_LIST.remove(SOCK)
                 except ValueError as msg:
-                    print("{}:{}.".format(type(msg).__name__, msg))
-                continue
+                    print("{}:{}.".format(type(msg).__name__, msg))"""
+    try:  # Data recieved from client, process it
+        # print('sending')
+        new_message = str(model_tic_tac.get_board_state())
+        broadcast_data(new_message.encode())
+    except Exception as msg:  # Errors happened, client disconnected
+        print(type(msg).__name__, msg)
+        print("\rClient ({0}, {1}) disconnected.".format(ADDR[0], ADDR[1]))
+        broadcast_data("\rClient ({0}, {1}) is offline\n"
+                       .format(ADDR[0], ADDR[1]).encode())
+        SOCK.close()
+        try:
+            CONNECTION_LIST.remove(SOCK)
+        except ValueError as msg:
+            print("{}:{}.".format(type(msg).__name__, msg))
 
 SERVER_SOCKET.close()
