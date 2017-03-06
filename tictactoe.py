@@ -175,8 +175,198 @@ class Build_Model():
     """
     def __init__(self, games):
         self.games = games
-        # TODO
         # Assign location values for each piece according to its number
+
+        # Game 1
+        self.games[0].pieces[0].x = 20
+        self.games[0].pieces[0].y = 20
+        self.games[0].pieces[1].x = 60
+        self.games[0].pieces[1].y = 20
+        self.games[0].pieces[2].x = 100
+        self.games[0].pieces[2].y = 20
+        self.games[0].pieces[3].x = 20
+        self.games[0].pieces[3].y = 60
+        self.games[0].pieces[4].x = 60
+        self.games[0].pieces[4].y = 60
+        self.games[0].pieces[5].x = 100
+        self.games[0].pieces[5].y = 60
+        self.games[0].pieces[6].x = 20
+        self.games[0].pieces[6].y = 100
+        self.games[0].pieces[7].x = 60
+        self.games[0].pieces[7].y = 100
+        self.games[0].pieces[8].x = 100
+        self.games[0].pieces[8].y = 100
+
+        # Game 2
+        self.games[1].pieces[0].x = 140
+        self.games[1].pieces[0].y = 20
+        self.games[1].pieces[1].x = 180
+        self.games[1].pieces[1].y = 20
+        self.games[1].pieces[2].x = 220
+        self.games[1].pieces[2].y = 20
+        self.games[1].pieces[3].x = 140
+        self.games[1].pieces[3].y = 60
+        self.games[1].pieces[4].x = 180
+        self.games[1].pieces[4].y = 60
+        self.games[1].pieces[5].x = 220
+        self.games[1].pieces[5].y = 60
+        self.games[1].pieces[6].x = 140
+        self.games[1].pieces[6].y = 100
+        self.games[1].pieces[7].x = 180
+        self.games[1].pieces[7].y = 100
+        self.games[1].pieces[8].x = 220
+        self.games[1].pieces[8].y = 100
+
+        # Game 3
+        self.games[2].pieces[0].x = 260
+        self.games[2].pieces[0].y = 20
+        self.games[2].pieces[1].x = 300
+        self.games[2].pieces[1].y = 20
+        self.games[2].pieces[2].x = 340
+        self.games[2].pieces[2].y = 20
+        self.games[2].pieces[3].x = 260
+        self.games[2].pieces[3].y = 40
+        self.games[2].pieces[4].x = 300
+        self.games[2].pieces[4].y = 40
+        self.games[2].pieces[5].x = 340
+        self.games[2].pieces[5].y = 40
+        self.games[2].pieces[6].x = 260
+        self.games[2].pieces[6].y = 100
+        self.games[2].pieces[7].x = 300
+        self.games[2].pieces[7].y = 100
+        self.games[2].pieces[8].x = 340
+        self.games[2].pieces[8].y = 100
+
+        # Game 4
+        self.games[3].pieces[0].x = 20
+        self.games[3].pieces[0].y = 140
+        self.games[3].pieces[1].x = 60
+        self.games[3].pieces[1].y = 140
+        self.games[3].pieces[2].x = 100
+        self.games[3].pieces[2].y = 140
+        self.games[3].pieces[3].x = 20
+        self.games[3].pieces[3].y = 200
+        self.games[3].pieces[4].x = 60
+        self.games[3].pieces[4].y = 200
+        self.games[3].pieces[5].x = 100
+        self.games[3].pieces[5].y = 200
+        self.games[3].pieces[6].x = 20
+        self.games[3].pieces[6].y = 240
+        self.games[3].pieces[7].x = 60
+        self.games[3].pieces[7].y = 240
+        self.games[3].pieces[8].x = 100
+        self.games[3].pieces[8].y = 240
+
+        # Game 5
+        self.games[4].pieces[0].x = 140
+        self.games[4].pieces[0].y = 140
+        self.games[4].pieces[1].x = 180
+        self.games[4].pieces[1].y = 140
+        self.games[4].pieces[2].x = 220
+        self.games[4].pieces[2].y = 140
+        self.games[4].pieces[3].x = 140
+        self.games[4].pieces[3].y = 200
+        self.games[4].pieces[4].x = 180
+        self.games[4].pieces[4].y = 200
+        self.games[4].pieces[5].x = 220
+        self.games[4].pieces[5].y = 200
+        self.games[4].pieces[6].x = 140
+        self.games[4].pieces[6].y = 240
+        self.games[4].pieces[7].x = 180
+        self.games[4].pieces[7].y = 240
+        self.games[4].pieces[8].x = 220
+        self.games[4].pieces[8].y = 240
+
+        # Game 6
+        self.games[5].pieces[0].x = 260
+        self.games[5].pieces[0].y = 140
+        self.games[5].pieces[1].x = 300
+        self.games[5].pieces[1].y = 140
+        self.games[5].pieces[2].x = 340
+        self.games[5].pieces[2].y = 140
+        self.games[5].pieces[3].x = 260
+        self.games[5].pieces[3].y = 200
+        self.games[5].pieces[4].x = 300
+        self.games[5].pieces[4].y = 200
+        self.games[5].pieces[5].x = 340
+        self.games[5].pieces[5].y = 200
+        self.games[5].pieces[6].x = 260
+        self.games[5].pieces[6].y = 240
+        self.games[5].pieces[7].x = 300
+        self.games[5].pieces[7].y = 240
+        self.games[5].pieces[8].x = 340
+        self.games[5].pieces[8].y = 240
+
+        # Game 7
+        self.games[6].pieces[0].x = 20
+        self.games[6].pieces[0].y = 300
+        self.games[6].pieces[1].x = 60
+        self.games[6].pieces[1].y = 300
+        self.games[6].pieces[2].x = 100
+        self.games[6].pieces[2].y = 300
+        self.games[6].pieces[3].x = 20
+        self.games[6].pieces[3].y = 340
+        self.games[6].pieces[4].x = 60
+        self.games[6].pieces[4].y = 340
+        self.games[6].pieces[5].x = 100
+        self.games[6].pieces[5].y = 340
+        self.games[6].pieces[6].x = 20
+        self.games[6].pieces[6].y = 380
+        self.games[6].pieces[7].x = 60
+        self.games[6].pieces[7].y = 380
+        self.games[6].pieces[8].x = 100
+        self.games[6].pieces[8].y = 380
+
+        # Game 8
+        self.games[7].pieces[0].x = 140
+        self.games[7].pieces[0].y = 300
+        self.games[7].pieces[1].x = 180
+        self.games[7].pieces[1].y = 300
+        self.games[7].pieces[2].x = 220
+        self.games[7].pieces[2].y = 300
+        self.games[7].pieces[3].x = 140
+        self.games[7].pieces[3].y = 340
+        self.games[7].pieces[4].x = 180
+        self.games[7].pieces[4].y = 340
+        self.games[7].pieces[5].x = 220
+        self.games[7].pieces[5].y = 340
+        self.games[7].pieces[6].x = 140
+        self.games[7].pieces[6].y = 380
+        self.games[7].pieces[7].x = 180
+        self.games[7].pieces[7].y = 380
+        self.games[7].pieces[8].x = 220
+        self.games[7].pieces[8].y = 380
+
+        # Game 9
+        self.games[8].pieces[0].x = 260
+        self.games[8].pieces[0].y = 300
+        self.games[8].pieces[1].x = 300
+        self.games[8].pieces[1].y = 300
+        self.games[8].pieces[2].x = 340
+        self.games[8].pieces[2].y = 300
+        self.games[8].pieces[3].x = 260
+        self.games[8].pieces[3].y = 340
+        self.games[8].pieces[4].x = 300
+        self.games[8].pieces[4].y = 340
+        self.games[8].pieces[5].x = 340
+        self.games[8].pieces[5].y = 340
+        self.games[8].pieces[6].x = 260
+        self.games[8].pieces[6].y = 380
+        self.games[8].pieces[7].x = 300
+        self.games[8].pieces[7].y = 380
+        self.games[8].pieces[8].x = 340
+        self.games[8].pieces[8].y = 380
+
+        # game_pieces = []
+        # i = 1
+        # for game in games:
+        #     pieces = []
+        #     j = 1
+        #     for Piece in game:
+        #         Piece.x = j * 20
+        #         Piece.y =
+        #         j += 1
+        #     i += 1
 
 
 class View_Setup():
