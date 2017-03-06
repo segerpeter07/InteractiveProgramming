@@ -50,18 +50,7 @@ class TicTacToeModel:
                     piece.set_color()
                     self.piece.append(piece)
                     pieces.append(piece)
-            if i % 2 == 0:
-                board = Board(pieces, 300, 300, 'Black')
-            else:
-                board = Board(pieces, 300, 300, 'Grey')
             self.boards.append(board)
-
-
-        # for x in x_pos:
-        #     for y in y_pos:
-        #         piece = Piece('Purple', 20, 20, x, y)
-        #         piece.set_color()
-        #         self.piece.append(piece)
 
 
 class Piece:
@@ -123,7 +112,7 @@ class WholeGame():
 
 class Game():
     def __init__(self, pieces, counter):
-        self.pieces = pieces
+        self.pieces = pieces    # List of game pieces
         self.counter = counter
 
 
@@ -133,6 +122,8 @@ def readin_data(data):
     -unzips unto each game
     -makes board objects for each game
         -makes pieces objects for each board
+
+    Returns all the pieces with the correct x and y values
     """
     row1 = data[0]
     row2 = data[1]
@@ -165,10 +156,11 @@ def readin_data(data):
         game = Game(pieces, game_counter)
         game_objs.append(game)
         game_counter += 1
-    model = Build_Model(game_objs)
+    coordinated_pieces = Coordiated_Piece(game_objs)
+    return coordinated_pieces
 
 
-class Build_Model():
+class Coordiated_Piece():
     """
     This class builds a model by placing the pieces in their locations
     Takes: list of game objects and creates a model to be used
@@ -357,6 +349,11 @@ class Build_Model():
         self.games[8].pieces[8].x = 340
         self.games[8].pieces[8].y = 380
 
+        # Set colors for each point
+        for i in range(9):
+            for j in range(9):
+                self.games[i].pieces[j].color = self.games[i].pieces[j]
+
         # game_pieces = []
         # i = 1
         # for game in games:
@@ -389,8 +386,9 @@ class View_Setup():
         pygame.draw.line(self.screen, pygame.Color(125, 125, 125), (0, 300), (900, 300), 5)
         pygame.draw.line(self.screen, pygame.Color(125, 125, 125), (0, 600), (900, 600), 5)
 
-        for pieces in self.model.piece:
-            pygame.draw.rect(self.screen, pygame.Color(pieces.color), pygame.Rect(pieces.x, pieces.y, pieces.width, pieces.height))
+        for i in self.model.piece.games:
+            for j in i.pieces:
+                pygame.draw.rect(self.screen, pygame.Color(j.color), pygame.Rect(j.x, j.y, j.width, j.height))
         pygame.display.update()
 
 
