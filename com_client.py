@@ -26,7 +26,8 @@ class client(object):
             sys.exit()
 
     def send_message(self, message):
-        print(message)
+        if message is not 'hb':
+            print(message)
         self.MASTER_SOCK.sendall(message.encode())
 
     def check_messages(self):

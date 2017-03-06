@@ -1,5 +1,7 @@
 import ast
 
+D = 'blank'
+
 
 class model(object):
     def __init__(self):
@@ -11,7 +13,10 @@ class model(object):
         # print('saving', thruput)
         # print(thruput)
         to_use = self.correlation[member]
-        if to_use.turn_state:
+        if thruput[0] == 'u':
+            to_use.set_color(thruput[1:])
+            print(member, thruput[1:])
+        elif to_use.turn_state:
             try:
                 if 'hb' in thruput and len(thruput) > 2:
                     thruput = thruput[:len(thruput)-2]
@@ -75,36 +80,31 @@ class Point:
 
 
 class tic_tac_toe(object):
-    def __init__(self, f, x=0, y=0, size=100, state_matrix=[['#', '#', '#'],
-                                                            ['#', '#', '#'],
-                                                            ['#', '#', '#']]):
+    def __init__(self, f, x=0, y=0, size=100):
         self.origin = Point(x, y)
         self.size = size
-        self.state = state_matrix
         self.focus = f
+        self.state = [[D, D, D],
+                      [D, D, D],
+                      [D, D, D]]
 
     def __str__(self):
         to_return = str(self.state[0]) + '\n' + str(self.state[1]) + '\n' + str(self.state[2]) + '\n'
         return to_return
 
     def add_char(self, char, i, j):
-        if self.state[i][j] is '#':
+        if self.state[i][j] is D:
             self.state[i][j] = char
+            print('Clicked Valid Box.')
             return True
         else:
+            print('Box already taken')
             return False
 
     def on_click(self, x, y, char):
-        i = -1
-        j = -1
-        """
-        if x < self.size and y < self.size:
-            j = self.helper_func(x)
-            i = self.helper_func(y)
-            self.add_char(char, i, j)
-        else:
-            print('Click exceeds size')
-        """
+        x = x * 3
+        y = y * 3
+        print(x, y)
         j = helper_func(x)
         i = helper_func(y)
         print('sub box:', i, j)
@@ -143,17 +143,21 @@ class tic_tac_toe(object):
         three = self.state[2][0]
         if(one == two and one == three):
             return one
-        return'#'
+        return D
 
     def get_to_send(self):
         ls = []
         ls.append(self.focus)
-        ls.append(self.state)
+        # print(self.state)
+        if self.state is not None:
+            for i in self.state:
+                for q in i:
+                    ls.append(q)
         return ls
 
 
 class user(object):
-    def __init__(self, char='-', turn_state=False):
+    def __init__(self, char=D, turn_state=False):
         self.char = char
         self.turn_state = turn_state
 
@@ -166,14 +170,20 @@ class user(object):
         click_y = ls[1]
         i = helper_func(click_x)
         j = helper_func(click_y)
-        print('box clicked on:', i, j)
+        print('box clicked on:', i, ':', j)
+        print('box in focus:', get_board_focus())
         if main_board[j][i].focus:
-            return main_board[j][i].on_click(click_x - i/3, click_y - j/3, self.char)
+            return main_board[j][i].on_click(click_x - i/3,
+                                             click_y - j/3,
+                                             self.char)
         else:
             return False
 
     def flip_turn(self):
         self.turn_state = not self.turn_state
+
+    def set_color(self, color):
+        self.char = color
 
 
 def helper_func(val):
@@ -190,13 +200,48 @@ def change_focus(row, column):
     for rw in main_board:
         for game in rw:
             game.focus = False
-    main_board[row][column].focus = True
-    print('focus on:', row, column)
+    main_board[column][row].focus = True
+    print('focus on:', column, row)
 
 
-main_board = [[tic_tac_toe(1), tic_tac_toe(0), tic_tac_toe(0)],
-              [tic_tac_toe(0), tic_tac_toe(0), tic_tac_toe(0)],
-              [tic_tac_toe(0), tic_tac_toe(0), tic_tac_toe(0)]]
+main_board = [[tic_tac_toe(True), tic_tac_toe(False), tic_tac_toe(False)],
+              [tic_tac_toe(False), tic_tac_toe(False), tic_tac_toe(False)],
+              [tic_tac_toe(False), tic_tac_toe(False), tic_tac_toe(False)]]
+
+
+def check_if_won(board):
+    # checks if the rows have a winner
+    ls = []
+    for i in board:
+        ts = []
+        for v in i:
+            ts.append(v.check_if_won)
+
+    for row in ls:
+        if(row[0] == row[1] and row[0] == row[2]):
+            return row[0]
+
+    # checks if the columns have a winner
+    for column in range(0, len(ls)):
+        one = ls[0][column]
+        two = ls[1][column]
+        three = ls[2][column]
+        if(one == two and one == three):
+            return one
+
+    # checks if the upper-left bottom-right diagonal has a winner
+    one = ls[0][0]
+    two = ls[1][1]
+    three = ls[2][2]
+    if(one == two and one == three):
+        return one
+
+    # checks if the other diagonal has a winner
+    one = ls[0][2]
+    three = ls[2][0]
+    if(one == two and one == three):
+        return one
+    return D
 
 
 def get_board_state():
@@ -210,7 +255,16 @@ def get_board_state():
     return ls
 
 
-# print(get_board_state())
+def get_board_focus():
+    for i, row in enumerate(main_board):
+        for o, column in enumerate(row):
+            if column.focus == 1:
+                return str(i) + ':' + str(o)
+    return 'none in focus'
+
+
+print(get_board_state())
+print(get_board_focus())
 """test = tic_tac_toe()
 
 print(test)
