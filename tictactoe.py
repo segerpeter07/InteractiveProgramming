@@ -136,23 +136,34 @@ def readin_data(data):
     game8 = row3[1]
     game9 = row3[2]
 
-    games = [game1, game2, game3, game4, game5, game6, game7, game8, game9]
+    game_colors = [game1, game2, game3, game4, game5, game6, game7, game8, game9]
     game_objs = []
     # build a list of pieces for each game with [0] being the focus value
-    for game in games:
+    j = 0
+    for game in game_colors:
         gametemp = Game()
         pieces = []
         gametemp.focus = game[0]
-        for i in range(1, 9):
-            piece = Piece
+        for i in range(1, 10):
+            piece = Piece('Green')
             piece.color = game[i]
+            piece.x = 0  # Set default x value
+            piece.y = 0  # Set default y value
+            piece.width = 20    # Set defualt square width
+            piece.height = 20   # Set default squre height
             pieces.append(piece)
         gametemp.pieces = pieces
         game_objs.append(gametemp)
+        j += 1
 
-    coordinated_pieces = Coordiated_Piece(game_objs, width, height)
-    print(coordinated_pieces.games.pieces[0].color)  # !!!!!!!!!!!!!!!!!
+    print(game_objs[2].pieces[7].y)
+
+    # Send list of game objs to get assigned x and y positions
+    # comes back as a list of game objs
+    coordinated_pieces = coordinate_pieces(game_objs, width, height)
+    # print(coordinated_pieces[2].pieces[8].color)  # works
     return coordinated_pieces
+
 
     # game_counter = 0
     # for counts in games:
@@ -187,6 +198,10 @@ it around with the objs
 
 
 def coordinate_pieces(game_objs, width, height):
+    """
+    This function takes a list of game objects, the width & hieght of the board
+    Returns the same list of game objects, except with x, y, and color
+    """
     for row in range(8):
         for collumn in range(8):
             if row == 0 or collumn == 0:
@@ -203,11 +218,189 @@ def coordinate_pieces(game_objs, width, height):
                 game_objs[row].pieces[collumn].x = width - (width / collumn)
                 game_objs[row].pieces[collumn].y = height - (height / row)
 
-    # Set colors for each point
-    for i in range(8):
-        for j in range(8):
-            game_objs[i].pieces[j].color = game_objs[i].pieces[j]
+    # Game 1
+    # game_objs[0].pieces[0].x = 20
+    # game_objs[0].pieces[0].y = 20
+    # game_objs[0].pieces[1].x = 60
+    # game_objs[0].pieces[1].y = 20
+    # game_objs[0].pieces[2].x = 100
+    # game_objs[0].pieces[2].y = 20
+    # game_objs[0].pieces[3].x = 20
+    # game_objs[0].pieces[3].y = 60
+    # game_objs[0].pieces[4].x = 60
+    # game_objs[0].pieces[4].y = 60
+    # game_objs[0].pieces[5].x = 100
+    # game_objs[0].pieces[5].y = 60
+    # game_objs[0].pieces[6].x = 20
+    # game_objs[0].pieces[6].y = 100
+    # game_objs[0].pieces[7].x = 60
+    # game_objs[0].pieces[7].y = 100
+    # game_objs[0].pieces[8].x = 100
+    # game_objs[0].pieces[8].y = 100
+    #
+    # # Game 2
+    # game_objs[1].pieces[0].x = 140
+    # game_objs[1].pieces[0].y = 20
+    # game_objs[1].pieces[1].x = 180
+    # game_objs[1].pieces[1].y = 20
+    # game_objs[1].pieces[2].x = 220
+    # game_objs[1].pieces[2].y = 20
+    # game_objs[1].pieces[3].x = 140
+    # game_objs[1].pieces[3].y = 60
+    # game_objs[1].pieces[4].x = 180
+    # game_objs[1].pieces[4].y = 60
+    # game_objs[1].pieces[5].x = 220
+    # game_objs[1].pieces[5].y = 60
+    # game_objs[1].pieces[6].x = 140
+    # game_objs[1].pieces[6].y = 100
+    # game_objs[1].pieces[7].x = 180
+    # game_objs[1].pieces[7].y = 100
+    # game_objs[1].pieces[8].x = 220
+    # game_objs[1].pieces[8].y = 100
+    #
+    # print(game_objs[3].pieces[2].x)
+    #
+    # # Game 3
+    # game_objs[2].pieces[0].x = 260
+    # game_objs[2].pieces[0].y = 20
+    # game_objs[2].pieces[1].x = 300
+    # game_objs[2].pieces[1].y = 20
+    # game_objs[2].pieces[2].x = 340
+    # game_objs[2].pieces[2].y = 20
+    # game_objs[2].pieces[3].x = 260
+    # game_objs[2].pieces[3].y = 60
+    # game_objs[2].pieces[4].x = 300
+    # game_objs[2].pieces[4].y = 60
+    # game_objs[2].pieces[5].x = 340
+    # game_objs[2].pieces[5].y = 60
+    # game_objs[2].pieces[6].x = 260
+    # game_objs[2].pieces[6].y = 100
+    # game_objs[2].pieces[7].x = 300
+    # game_objs[2].pieces[7].y = 100
+    # game_objs[2].pieces[8].x = 340
+    # game_objs[2].pieces[8].y = 100
+    #
+    # # Game 4
+    # game_objs[3].pieces[0].x = 20
+    # game_objs[3].pieces[0].y = 140
+    # game_objs[3].pieces[1].x = 60
+    # game_objs[3].pieces[1].y = 140
+    # game_objs[3].pieces[2].x = 100
+    # game_objs[3].pieces[2].y = 140
+    # game_objs[3].pieces[3].x = 20
+    # game_objs[3].pieces[3].y = 200
+    # game_objs[3].pieces[4].x = 60
+    # game_objs[3].pieces[4].y = 200
+    # game_objs[3].pieces[5].x = 100
+    # game_objs[3].pieces[5].y = 200
+    # game_objs[3].pieces[6].x = 20
+    # game_objs[3].pieces[6].y = 240
+    # game_objs[3].pieces[7].x = 60
+    # game_objs[3].pieces[7].y = 240
+    # game_objs[3].pieces[8].x = 100
+    # game_objs[3].pieces[8].y = 240
+    #
+    # # Game 5
+    # game_objs[4].pieces[0].x = 140
+    # game_objs[4].pieces[0].y = 140
+    # game_objs[4].pieces[1].x = 180
+    # game_objs[4].pieces[1].y = 140
+    # game_objs[4].pieces[2].x = 220
+    # game_objs[4].pieces[2].y = 140
+    # game_objs[4].pieces[3].x = 140
+    # game_objs[4].pieces[3].y = 200
+    # game_objs[4].pieces[4].x = 180
+    # game_objs[4].pieces[4].y = 200
+    # game_objs[4].pieces[5].x = 220
+    # game_objs[4].pieces[5].y = 200
+    # game_objs[4].pieces[6].x = 140
+    # game_objs[4].pieces[6].y = 240
+    # game_objs[4].pieces[7].x = 180
+    # game_objs[4].pieces[7].y = 240
+    # game_objs[4].pieces[8].y = 240
+    # game_objs[4].pieces[8].x = 220
+    #
+    # # Game 6
+    # game_objs[5].pieces[0].x = 260
+    # game_objs[5].pieces[0].y = 140
+    # game_objs[5].pieces[1].x = 300
+    # game_objs[5].pieces[1].y = 140
+    # game_objs[5].pieces[2].x = 340
+    # game_objs[5].pieces[2].y = 140
+    # game_objs[5].pieces[3].x = 260
+    # game_objs[5].pieces[3].y = 200
+    # game_objs[5].pieces[4].x = 300
+    # game_objs[5].pieces[4].y = 200
+    # game_objs[5].pieces[5].x = 340
+    # game_objs[5].pieces[5].y = 200
+    # game_objs[5].pieces[6].x = 260
+    # game_objs[5].pieces[6].y = 240
+    # game_objs[5].pieces[7].x = 300
+    # game_objs[5].pieces[7].y = 240
+    # game_objs[5].pieces[8].x = 340
+    # game_objs[5].pieces[8].y = 240
+    #
+    # # Game 7
+    # game_objs[6].pieces[0].x = 20
+    # game_objs[6].pieces[0].y = 300
+    # game_objs[6].pieces[1].x = 60
+    # game_objs[6].pieces[1].y = 300
+    # game_objs[6].pieces[2].x = 100
+    # game_objs[6].pieces[2].y = 300
+    # game_objs[6].pieces[3].x = 20
+    # game_objs[6].pieces[3].y = 340
+    # game_objs[6].pieces[4].x = 60
+    # game_objs[6].pieces[4].y = 340
+    # game_objs[6].pieces[5].x = 100
+    # game_objs[6].pieces[5].y = 340
+    # game_objs[6].pieces[6].x = 20
+    # game_objs[6].pieces[6].y = 380
+    # game_objs[6].pieces[7].x = 60
+    # game_objs[6].pieces[7].y = 380
+    # game_objs[6].pieces[8].x = 100
+    # game_objs[6].pieces[8].y = 380
+    #
+    # # Game 8
+    # game_objs[7].pieces[0].x = 140
+    # game_objs[7].pieces[0].y = 300
+    # game_objs[7].pieces[1].x = 180
+    # game_objs[7].pieces[1].y = 300
+    # game_objs[7].pieces[2].x = 220
+    # game_objs[7].pieces[2].y = 300
+    # game_objs[7].pieces[3].x = 140
+    # game_objs[7].pieces[3].y = 340
+    # game_objs[7].pieces[4].x = 180
+    # game_objs[7].pieces[4].y = 340
+    # game_objs[7].pieces[5].x = 220
+    # game_objs[7].pieces[5].y = 340
+    # game_objs[7].pieces[6].x = 140
+    # game_objs[7].pieces[6].y = 380
+    # game_objs[7].pieces[7].x = 180
+    # game_objs[7].pieces[7].y = 380
+    # game_objs[7].pieces[8].x = 220
+    # game_objs[7].pieces[8].y = 380
+    #
+    # # Game 9
+    # game_objs[8].pieces[0].x = 260
+    # game_objs[8].pieces[0].y = 300
+    # game_objs[8].pieces[1].x = 300
+    # game_objs[8].pieces[1].y = 300
+    # game_objs[8].pieces[2].x = 340
+    # game_objs[8].pieces[2].y = 300
+    # game_objs[8].pieces[3].x = 260
+    # game_objs[8].pieces[3].y = 340
+    # game_objs[8].pieces[4].x = 300
+    # game_objs[8].pieces[4].y = 340
+    # game_objs[8].pieces[5].x = 340
+    # game_objs[8].pieces[5].y = 340
+    # game_objs[8].pieces[6].x = 260
+    # game_objs[8].pieces[6].y = 380
+    # game_objs[8].pieces[7].x = 300
+    # game_objs[8].pieces[7].y = 380
+    # game_objs[8].pieces[8].x = 340
+    # game_objs[8].pieces[8].y = 380
 
+    return game_objs
 
 
 class Coordiated_Piece():
@@ -226,16 +419,16 @@ class Coordiated_Piece():
                 if row == 0 or collumn == 0:
                     if collumn == 0 and row != 0:
                         self.games[row].pieces[collumn].x = 0
-                        self.games[row].pieces[collumn].y = height - (height / row)
+                        self.games[row].pieces[collumn].y = height - 9 * (height / row)
                     elif row == 0 and collumn != 0:
-                        self.games[row].pieces[collumn].x = width - (height / collumn)
+                        self.games[row].pieces[collumn].x = width - 9 * (height / collumn)
                         self.games[row].pieces[collumn].y = 0
                     else:
                         self.games[row].pieces[collumn].x = 0
                         self.games[row].pieces[collumn].y = 0
                 else:
-                    self.games[row].pieces[collumn].x = width - (width / collumn)
-                    self.games[row].pieces[collumn].y = height - (height / row)
+                    self.games[row].pieces[collumn].x = width - 9 * (width / collumn)
+                    self.games[row].pieces[collumn].y = height - 9 * (height / row)
 
         # Set colors for each point
         for i in range(8):
@@ -254,18 +447,19 @@ class View_Setup():
     # TODO
     # Modify
     def draw(self):
-        self.screen.fill(pygame.Color(25, 25, 25))
+        self.screen.fill(pygame.Color(250, 250, 250))
         # Draw vertical division lines
-        pygame.draw.line(self.screen, pygame.Color(125, 125, 125), (300, 0), (300, 900), 5)
-        pygame.draw.line(self.screen, pygame.Color(125, 125, 125), (600, 0), (600, 900), 5)
+        pygame.draw.line(self.screen, pygame.Color(125, 125, 125), (900 / 3, 0), (900 / 3, 900), 5)
+        pygame.draw.line(self.screen, pygame.Color(125, 125, 125), (2*900/3, 0), (2*900/3, 900), 5)
 
         # Draw horizontal division lines
-        pygame.draw.line(self.screen, pygame.Color(125, 125, 125), (0, 300), (900, 300), 5)
-        pygame.draw.line(self.screen, pygame.Color(125, 125, 125), (0, 600), (900, 600), 5)
+        pygame.draw.line(self.screen, pygame.Color(125, 125, 125), (0, 900/3), (900, 900/3), 5)
+        pygame.draw.line(self.screen, pygame.Color(125, 125, 125), (0, 2*900/3), (900, 2*900/3), 5)
 
-        for game in self.model.games:
+        for game in self.model:
             for piece in game.pieces:
-                print(piece.color)
+                # print(piece.x)
+                # print(piece.y)
                 pygame.draw.rect(self.screen, pygame.Color(piece.color),
                                  pygame.Rect(piece.x, piece.y,
                                              piece.width, piece.height))
@@ -294,7 +488,7 @@ if __name__ == '__main__':
 
     # model = TicTacToeModel()
     # view = PyGameWindowView(model, screen)
-    data = [[[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Purple","Green","Green","Green","Green","Green","Green","Green","Green"]],[[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Purple","Green","Green","Green","Green","Green","Green","Green","Green"]],[[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"]]]
+    data = [[[0,"Purple","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Purple","Green","Green","Green","Green","Green","Green","Green","Green"]],[[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Purple","Green","Green","Green","Green","Green","Green","Green","Green"]],[[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"]]]
     model = readin_data(data)
     view = View_Setup(model, screen)
     # controller = PyGameMouseController(model)
