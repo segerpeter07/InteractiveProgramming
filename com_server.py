@@ -29,7 +29,7 @@ PORT = 1337
 
 SERVER_SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 SERVER_SOCKET.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-SERVER_SOCKET.bind(("10.7.64.90", PORT))  # empty addr string means INADDR_ANY
+SERVER_SOCKET.bind(("10.7.64.108", PORT))  # empty addr string means INADDR_ANY
 
 print("Listening...")
 SERVER_SOCKET.listen(2)  # 10 connections
