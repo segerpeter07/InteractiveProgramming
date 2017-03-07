@@ -34,8 +34,8 @@ class Piece:
         return 'hello' + self.color
 
     def collision(self, x, y):
-        x_range = range(self.x, self.x + 20)
-        y_range = range(self.y, self.y + 20)
+        x_range = range(int(self.x), int(self.x) + 20)
+        y_range = range(int(self.y), int(self.y) + 20)
         if x in x_range and y in y_range:
             return True
         else:
@@ -93,8 +93,6 @@ def readin_data(data):
         gametemp.pieces = pieces
         game_objs.append(gametemp)
         j += 1
-
-    print(game_objs[2].pieces[7].y)
 
     # Send list of game objs to get assigned x and y positions
     # comes back as a list of game objs
@@ -167,6 +165,12 @@ if __name__ == '__main__':
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                x, y = event.pos
+                for games in model:
+                    for pieces in games.pieces:
+                        if pieces.collision(x, y):
+                            print("collision at: " + str(int(pieces.x)) + ' ' + str(int(pieces.y)))
         view.draw()
         time.sleep(.001)
 
