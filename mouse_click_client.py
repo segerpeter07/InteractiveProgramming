@@ -1,32 +1,47 @@
+"""
+    Client Script for Super Tic Tac tic_tac_toe
+    @Author Alex Chapman
+    3/6/17
+"""
+
 from com_client import client
 import pygame
 import sys
 import time
 import ast
 
+# initialize colors to be used
 BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 
+# non-magic number size implementation
 width = 500
+
 pygame.init()
-# pygame.display.set_mode((1000, 1000))
 screen = pygame.display.set_mode((width, width))
 
+# initializes and connects client object to server
 c = client()
 c.check_messages()
 
 
 def check_mouse():
-    # ERROR: CANT CLOSE WINDOW
+    """
+    Finds and gets all mouse clicked positions in the scope of the pygame
+    window.
+    """
     events = pygame.event.get()
     for event in events:
+        # if x clicked
         if event.type == pygame.QUIT:
             sys.exit()
+        # if mousebutton pressed, return mouse position
         if event.type == pygame.MOUSEBUTTONDOWN:
             return pygame.mouse.get_pos()
 
 
 def draw():
+    """Placeholder for later draw"""
     screen.fill((255, 255, 255))
     pygame.draw.lines(screen, BLUE, False, [[0, width / 3],
                                             [width, width/3],
@@ -52,6 +67,7 @@ def draw():
 
 
 def print_messages(thruput):
+    """Placeholder method for determining functionality of game"""
     thruput = thruput[:int(len(thruput)/2)]
     lines = ['-----', '-----', '-----', '|', '-----', '-----', '-----', '|', '-----', '-----', '-----']
     try:
