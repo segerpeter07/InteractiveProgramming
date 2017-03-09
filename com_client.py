@@ -18,7 +18,7 @@ class client(object):
             MASTER_SOCK     - Master connection to server
             READ_SOCKETS    - list of sockets to read messages from
     """
-    def __init__(self, HOST='10.7.10.9', PORT=1337):
+    def __init__(self, HOST='10.7.64.108', PORT=1337):
         """Returns Client Object"""
         self.HOST = HOST
         self.PORT = PORT
