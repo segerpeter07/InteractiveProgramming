@@ -1,5 +1,4 @@
 # Interactive Programming
-##This is a subheading
 This is the working Repo for a multiplayer networked tic tac toe game made in Python for Software Design @ Olin 2017.
 
 Website can be found [HERE](http://peterhenryseger.com/supertictactoe)

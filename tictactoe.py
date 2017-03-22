@@ -34,25 +34,6 @@ class Player():
         return 'Player name: ' + self.name + ' Player color: ' + self.color
 
 
-class TicTacToeModel:
-    """ Encodes the game state """
-    def __init__(self):
-        self.piece = []
-        x_pos = list(range(0, 900, 105))
-        y_pos = list(range(0, 900, 105))
-        self.boards = []
-        numboard = 9
-        for i in range(numboard):
-            pieces = []
-            for x in x_pos:
-                for y in y_pos:
-                    piece = Piece('Purple', 20, 20, x, y)
-                    piece.set_color()
-                    self.piece.append(piece)
-                    pieces.append(piece)
-            self.boards.append(board)
-
-
 class Piece:
     def __init__(self, color, height=20, width=20, x=0, y=0):
         self.color = color
@@ -76,35 +57,11 @@ class Piece:
             return False
 
 
-class PyGameWindowView:
-    def __init__(self, model, screen):
-        self.model = model
-        self.screen = screen
-
-    def draw(self):
-        self.screen.fill(pygame.Color(25, 25, 25))
-        # Draw vertical division lines
-        pygame.draw.line(self.screen, pygame.Color(125, 125, 125), (300, 0), (300, 900), 5)
-        pygame.draw.line(self.screen, pygame.Color(125, 125, 125), (600, 0), (600, 900), 5)
-
-        # Draw horizontal division lines
-        pygame.draw.line(self.screen, pygame.Color(125, 125, 125), (0, 300), (900, 300), 5)
-        pygame.draw.line(self.screen, pygame.Color(125, 125, 125), (0, 600), (900, 600), 5)
-
-        for pieces in self.model.piece:
-            pygame.draw.rect(self.screen, pygame.Color(pieces.color), pygame.Rect(pieces.x, pieces.y, pieces.width, pieces.height))
-        pygame.display.update()
-
-
-"""********************"""
-
-
-class WholeGame():
-    def __init__(self, games):
-        self.games = games
-
-
 class Game():
+    """
+    This class contains all the pieces on the game board as well as information
+    for the focus of the board, which shows which sub-game is being played
+    """
     def __init__(self, pieces=[], focus=0):
         self.pieces = pieces    # List of game pieces
         self.focus = focus  # Focus used to determine if the game is active
@@ -162,24 +119,6 @@ def readin_data(data):
     # comes back as a list of game objs
     coordinated_pieces = coordinate_pieces(game_objs, width, height)
     return coordinated_pieces
-
-
-    # game_counter = 0
-    # for counts in games:
-    #     piece_counter = 0
-    #     pieces = []
-    #     for pieces in counts:
-    #         if pieces == 0 or pieces == 1:
-    #             pieces.append(i)
-    #         else:
-    #             piece = Piece(i, piece_coutner)
-    #         counter += 1
-    #         piece.append(piece)
-    #     game = Game(pieces, game_counter)
-    #     game_objs.append(game)
-    #     game_counter += 1
-    # coordinated_pieces = Coordiated_Piece(game_objs, width, height)
-    # return coordinated_pieces
 
 
 def coordinate_pieces(game_objs, width, height):
@@ -245,8 +184,6 @@ class View_Setup():
         self.model = model
         self.screen = screen
 
-    # TODO
-    # Modify
     def draw(self):
         self.screen.fill(pygame.Color(25, 25, 25))
         # Draw vertical division lines
@@ -259,27 +196,11 @@ class View_Setup():
 
         for game in self.model:
             for piece in game.pieces:
-                # print(piece.x)
-                # print(piece.y)
                 pygame.draw.rect(self.screen, pygame.Color(piece.color),
                                  pygame.Rect(piece.x, piece.y,
                                              piece.width, piece.height))
         pygame.display.update()
 
-
-def make_game(pieces, focus):
-    """
-    This function makes a game board object and fills it with the pieces given
-    in the correct locations
-    """
-    game = Board()
-    game.pieces = pieces
-    game.focus = focus
-
-    # Redundent?!?!?!
-
-
-"""********************"""
 
 if __name__ == '__main__':
     pygame.init()
@@ -287,12 +208,9 @@ if __name__ == '__main__':
     size = (900, 900)
     screen = pygame.display.set_mode(size)
 
-    # model = TicTacToeModel()
-    # view = PyGameWindowView(model, screen)
     data = [[[0,"Purple","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Purple","Green","Green","Green","Green","Green","Green","Green","Green"]],[[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Purple","Green","Green","Green","Green","Green","Green","Green","Green"]],[[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"],[0,"Green","Green","Green","Green","Green","Green","Green","Green","Green"]]]
     model = readin_data(data)
     view = View_Setup(model, screen)
-    # controller = PyGameMouseController(model)
 
     running = True
 
@@ -301,11 +219,6 @@ if __name__ == '__main__':
             if event.type == pygame.QUIT:
                 running = False
         view.draw()
-
-    # """Prompt user to select color"""
-    # name = input("What you want your name to be? ")
-    # color = input("What do you want your color to be? ")
-    # player1 = Player('player1', color)
 
     while running:
 
@@ -317,7 +230,6 @@ if __name__ == '__main__':
                 for boards in model.boards:
                     for pieces in boards.pieces:
                         if pieces.collision(x, y):
-                            # print("collision at: " + str(pieces.x) + ' ' + str(pieces.y))
                             if pieces.color == 'Green':
                                 pieces.set_color(player1.color)
                             elif pieces.color == player1.color:
